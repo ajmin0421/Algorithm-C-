@@ -6,7 +6,7 @@
     int n,m,k,ret,comp,a[max_n][max_n],visited[max_n][max_n];
     int sx,sy,ex,ey,temp=1;
     vector<int> areaSize;
-
+/*
     void dfs(int y,int x){
         visited[y][x]=1;
         for(int i=0;i<4;i++){
@@ -19,6 +19,21 @@
             dfs(ny,nx);
         }
         return;
+    }*/
+
+    int dfs(int y,int x){
+        visited[y][x]=1;
+        int res=1;
+        for(int i=0;i<4;i++){
+            int ny=y+dy[i];
+            int nx=x+dx[i];
+            if(ny<0||ny>=n||nx<0||nx>=m) continue;
+            if(visited[ny][nx]) continue;
+            if(a[ny][nx]<0) continue;
+            temp++;
+            res += dfs(ny,nx);
+        }
+        return res;
     }
 
     int main(){
@@ -38,9 +53,7 @@
                 if(a[i][j]<0) continue;
                 comp++;
                 visited[i][j]++;
-                dfs(i,j);
-                areaSize.push_back(temp);
-                temp=1;
+                areaSize.push_back(dfs(i,j));
             }
         }
 
