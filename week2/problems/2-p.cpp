@@ -38,7 +38,7 @@ int main(){
         }
     }
     const int vs=v.size();
-    for(int i=0;i<vs;i++){
+    for(int i=0;i<vs;i++){//3중 for문 말고 조합으로 풀어보기!
         for(int j=i+1;j<vs;j++){
             for(int k=j+1;k<vs;k++){               
                 memcpy(temp_map,a,sizeof(a));
