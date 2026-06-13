@@ -1,29 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-ll n,k,ret;
-
+int n,a,e,pre=-1,ret;
+vector<pair<int,int>> v;
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cin>>n>>k;
-    vector<pair<ll,ll>> v(n);
-    vector<ll> vv(k);
-
+    cin>>n;
     for(int i=0;i<n;i++){
-        cin>>v[i].first>>v[i].second;
+        cin>>a>>e;
+        v.push_back({e,a});
     }
-    for(int i=0;i<k;i++) cin>>vv[i];
-
     sort(v.begin(),v.end());
-    sort(vv.begin(),vv.end());
-    priority_queue<ll> pq;
-    
-    int j=0;
-    for(int i=0;i<k;i++){
-        while(j<n&&v[j].first<=vv[i]) pq.push(v[j++].second);
-        if(pq.size()){
-            ret+=pq.top(); pq.pop();
+    for(auto it:v){
+        if(it.second>=pre){
+            pre=it.first;
+            ret++;
         }
     }
     cout<<ret<<'\n';

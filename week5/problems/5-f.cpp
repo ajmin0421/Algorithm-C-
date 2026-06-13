@@ -1,42 +1,28 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-ll n,ret,high,low,sum;
-
-vector<int> sieve(int n){
-    vector<bool> is_prime(n+1,true);
-    is_prime[0] = is_prime[1] = false;
-
-    for(int i=2;i*i<=n;i++){
-        if(is_prime[i]){
-            for(int j=i*i;j<=n;j += i){
-                is_prime[j] = false;
-            }
-        }
-    }
-
-    vector<int> primes;
-    for(int i=2;i<=n;i++){
-        if(is_prime[i]) primes.push_back(i);
-    }
-    return primes;
-}
+ll n,k,a,b,ret,flag;
 
 int main(){
-    cin>>n;
-    if(n==1){
-        cout<<0<<'\n'; return 0;
+    //가방에는 어짜피 하나에 하나밖에 안들어가니 그 가방 최대 무게 전까지의 무게를 정렬하여서 pq에 넣으면 될듯?
+    cin>>n>>k;
+    vector<pair<int,int>> v(n);
+    vector<int> vv(k);
+    for(int i=0;i<n;i++){
+        cin>>v[i].first>>v[i].second;
     }
-    vector<int> primes = sieve(n);
-    sum+=primes[0];
-    while(high<primes.size()||low<primes.size()){
-        if(high==primes.size()) break;
-        else if(sum<n) sum+=primes[++high];
-        else if(sum>n) sum-=primes[low++];
-        else{
-            ret++; sum-=primes[low++];
+    for(int i=0;i<k;i++) cin>>vv[i];
+
+    sort(v.begin(),v.end());
+    sort(vv.begin(),vv.end());
+    
+    priority_queue<ll> pq;
+    int j=0;
+    for(int i=0;i<k;i++){
+        while(j<n&&v[j].first<=vv[i]) pq.push(v[j++].second);
+        if(pq.size()){
+            ret+=pq.top(); pq.pop();
         }
     }
     cout<<ret<<'\n';
-    return 0;
 }
